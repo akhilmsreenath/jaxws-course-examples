@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions targetNamespace="http://crowdcode.de/jaxws"
+	name="CalculatorService" xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:tns="http://crowdcode.de/jaxws"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+	xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+
+<!-- 
+	<wsp:Policy wsu:Id="AddNumbersBinding_WSAddressing_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<wsam:Addressing>
+					<wsp:Policy />
+				</wsam:Addressing>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+ -->
+
+	<types>
+		<xs:schema version="1.0" targetNamespace="http://crowdcode.de/jaxws"
+			xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+			<xs:element name="CalculatorException" type="tns:CalculatorException" />
+
+			<xs:element name="divide" type="tns:divide" />
+
+			<xs:element name="divideResponse" type="tns:divideResponse" />
+
+			<xs:element name="sum" type="tns:sum" />
+
+			<xs:element name="sumResponse" type="tns:sumResponse" />
+
+			<xs:complexType name="sum">
+				<xs:sequence>
+					<xs:element name="value" type="xs:int" nillable="true"
+						minOccurs="0" maxOccurs="unbounded" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="sumResponse">
+				<xs:sequence>
+					<xs:element name="return" type="xs:int" minOccurs="0" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="CalculatorException">
+				<xs:sequence>
+					<xs:element name="faultInfo" type="xs:string" minOccurs="0" />
+					<xs:element name="message" type="xs:string" minOccurs="0" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="divide">
+				<xs:sequence>
+					<xs:element name="dividend" type="xs:double" minOccurs="0" />
+					<xs:element name="divisor" type="xs:double" minOccurs="0" />
+				</xs:sequence>
+			</xs:complexType>
+
+			<xs:complexType name="divideResponse">
+				<xs:sequence>
+					<xs:element name="result" type="xs:double" minOccurs="0" />
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</types>
+	<message name="divide">
+		<part name="parameters" element="tns:divide" />
+	</message>
+	<message name="divideResponse">
+		<part name="parameters" element="tns:divideResponse" />
+	</message>
+	<message name="CalculatorException">
+		<part name="fault" element="tns:CalculatorException" />
+	</message>
+	<message name="sum">
+		<part name="parameters" element="tns:sum" />
+	</message>
+	<message name="sumResponse">
+		<part name="parameters" element="tns:sumResponse" />
+	</message>
+	<portType name="Calculator">
+		<operation name="divide">
+			<input wsam:Action="urn:divideNumbers" message="tns:divide" />
+			<output wsam:Action="http://crowdcode.de/jaxws/Calculator/divideResponse"
+				message="tns:divideResponse" />
+			<fault message="tns:CalculatorException" name="CalculatorException"
+				wsam:Action="http://crowdcode.de/jaxws/Calculator/divide/Fault/CalculatorException" />
+		</operation>
+		<operation name="sum">
+			<input wsam:Action="urn:sumNumbers" message="tns:sum" />
+			<output wsam:Action="http://crowdcode.de/jaxws/Calculator/sumResponse"
+				message="tns:sumResponse"/>
+			<fault message="tns:CalculatorException" name="CalculatorException"
+				wsam:Action="http://crowdcode.de/jaxws/Calculator/sum/Fault/CalculatorException" />
+		</operation>
+	</portType>
+	<binding name="CalculatorBeanPortBinding" type="tns:Calculator">
+		<wsaw:UsingAddressing wsdl:required="false" />    
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"	style="document" />
+		<operation name="divide">
+			<soap:operation soapAction="urn:divideNumbers" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="CalculatorException">
+				<soap:fault name="CalculatorException" use="literal" />
+			</fault>
+		</operation>
+		<operation name="sum">
+			<soap:operation soapAction="urn:sumNumbers" />
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="CalculatorException">
+				<soap:fault name="CalculatorException" use="literal" />
+			</fault>
+		</operation>
+	</binding>
+	<service name="CalculatorService">
+		<port name="CalculatorBeanPort" binding="tns:CalculatorBeanPortBinding">
+			<soap:address location="REPLACE_WITH_ACTUAL_URL" />
+		</port>
+	</service>
+</definitions>
+

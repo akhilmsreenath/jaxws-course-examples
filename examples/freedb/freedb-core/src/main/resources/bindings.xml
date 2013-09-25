@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings 
+		version="2.0" 
+		xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <jaxb:bindings schemaLocation="dictionary.xsd">
+	    <jaxb:schemaBindings>
+			<jaxb:package name="com.course.freedb.model"/>	    
+	    </jaxb:schemaBindings>
+	    <jaxb:bindings node="/xs:schema/xs:complexType[@name='DictionaryType']">
+	    	<jaxb:class name="Dictionary"/>
+	    	<jaxb:bindings node="xs:sequence/xs:element[@name='album']">
+				<jaxb:property name="albums"/>
+	    	</jaxb:bindings>
+	    </jaxb:bindings>
+	    <jaxb:bindings node="/xs:schema/xs:complexType[@name='AlbumType']">
+	    	<jaxb:class name="Album" implClass="com.course.freedb.model.AlbumComparable"/>
+	    	<jaxb:bindings node="xs:sequence/xs:element[@name='track']">
+				<jaxb:property name="tracks"/>
+	    	</jaxb:bindings>
+	    	<jaxb:bindings node="xs:sequence/xs:element[@name='discid']">
+				<jaxb:property name="discId"/>
+	    	</jaxb:bindings>
+	    </jaxb:bindings>
+	    <jaxb:bindings node="/xs:schema/xs:complexType[@name='TrackType']">
+	    	<jaxb:class name="Track"/>
+	    	<jaxb:bindings node="xs:sequence/xs:element[@name='trackno']">
+				<jaxb:property name="trackNo"/>
+	    	</jaxb:bindings>
+	    </jaxb:bindings>
+    </jaxb:bindings>    
+    
+</jaxb:bindings>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime"
+	version="2.0">
+	<endpoint 
+		name="CalculatorEndpointName" 
+		implementation="de.crowdcode.jaxws.server.CalculatorBean"
+		wsdl="WEB-INF/wsdl/CalculatorService.wsdl"
+		service="{http://crowdcode.de/jaxws}CalculatorService"
+		port="{http://crowdcode.de/jaxws}CalculatorBeanPort"
+		url-pattern="/calculator" />
+</endpoints>
