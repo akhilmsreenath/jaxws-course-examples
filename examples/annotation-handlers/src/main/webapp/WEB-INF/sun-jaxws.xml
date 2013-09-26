@@ -5,5 +5,11 @@
 		name="CalculatorWSAddressing" 
 		implementation="de.crowdcode.jaxws.server.CalculatorBean"
 		binding="http://java.sun.com/xml/ns/jaxws/2003/05/soap/bindings/HTTP/" 
-		url-pattern="/calculator" />
+		url-pattern="/calculator">
+		<handler-chains xmlns="http://java.sun.com/xml/ns/javaee">
+            <handler-chain>
+            	<handler>course.freedb.service.handlers.SoapMessageHandler</handler>
+            </handler-chain>
+        </handler-chains>
+	</endpoint>
 </endpoints>
