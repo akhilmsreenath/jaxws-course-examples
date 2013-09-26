@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    wsdlLocation="http://localhost:8080/annotation-handlers/calculator?wsdl"
+    xmlns="http://java.sun.com/xml/ns/jaxws">    
+    <bindings node="wsdl:definitions" xmlns:jws="http://java.sun.com/xml/ns/javaee">
+        <jws:handler-chains>
+            <jws:handler-chain>
+                <jws:handler>
+                    <jws:handler-class>course.freedb.service.handlers.LoggingHandler</jws:handler-class>
+                </jws:handler>
+            </jws:handler-chain>
+        </jws:handler-chains>
+    </bindings>
+</bindings>
+
